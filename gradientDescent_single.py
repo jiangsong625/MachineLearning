@@ -64,6 +64,7 @@ g, cost = gradient_descent(X, Y, theta, alpha, iters)
 # ax.set_ylabel('Profit')
 # plt.show()
 
+
 # 代价可视化
 fig, ax = plt.subplots(figsize=(12, 8))
 ax.plot(np.arange(iters), cost, 'b')
