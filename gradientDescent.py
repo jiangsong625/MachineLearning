@@ -48,21 +48,21 @@ iters = 1500
 
 g, cost = gradient_descent(X, Y, theta, alpha, iters)
 
-# # 拟合曲线
-# print(g)
-# print(cost)
-# cost = compute_cost(X, Y, g)
-# print(cost)
-# X = X[:, 1]
-# x = np.linspace(X.min(), X.max(), 100)
-# f = g[0, 0] + (g[0, 1] * x)  # f为假设函数
-# fig, ax = plt.subplots()
-# ax.plot(x, f, 'r', label='Fitted line')
-# ax.scatter(df.population, df.profit,  label='Training Data', marker='x')
-# ax.legend(loc=2)
-# ax.set_xlabel('Population')
-# ax.set_ylabel('Profit')
-# plt.show()
+# 拟合曲线
+print(g)
+print(cost)
+cost = compute_cost(X, Y, g)
+print(cost)
+X = X[:, 1]
+x = np.linspace(X.min(), X.max(), 100)
+f = g[0, 0] + (g[0, 1] * x)  # f为假设函数
+fig, ax = plt.subplots()
+ax.plot(x, f, 'r', label='Fitted line')
+ax.scatter(df.population, df.profit,  label='Training Data', marker='x')
+ax.legend(loc=2)
+ax.set_xlabel('Population')
+ax.set_ylabel('Profit')
+plt.show()
 
 # 代价可视化
 fig, ax = plt.subplots(figsize=(12, 8))
