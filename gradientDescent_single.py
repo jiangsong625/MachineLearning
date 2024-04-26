@@ -10,7 +10,7 @@ def compute_cost(X, Y, theta):
 
 # 批量梯度下降法
 def gradient_descent(X, Y, theta, alpha, iters ):  # alpha是学习率，iters是迭代次数
-    temp = np.matrix(np.zeros(theta.shape))  # 然后将temp变为矩阵[0.,0.]
+    temp = np.matrix(np.zeros(theta.shape))  # 然后将temp变为矩阵[0.,0.]，保留迭代参数的中间值
     parameters = int(theta.ravel().shape[1])  # 参数数量，ravel()的作用是将多维数组变为一维数组
     cost = np.zeros(iters)
     for i in range(iters):
@@ -28,6 +28,7 @@ def gradient_descent(X, Y, theta, alpha, iters ):  # alpha是学习率，iters�
 
 # 提取训练样本
 df = pd.read_csv('dataFile/ex1data1.txt', names=['population', 'profit'])
+# 插入一行 f=[1,x]*[b,w]T
 df.insert(loc=0, column='ONE', value=1)
 # 设置训练值变量x和目标变量y
 cols = df.shape[1]
@@ -53,7 +54,6 @@ g, cost = gradient_descent(X, Y, theta, alpha, iters)
 # print(cost)
 # cost = compute_cost(X, Y, g)
 # print(cost)
-# X = X[:, 1]
 # x = np.linspace(X.min(), X.max(), 100)
 # f = g[0, 0] + (g[0, 1] * x)  # f为假设函数
 # fig, ax = plt.subplots()
