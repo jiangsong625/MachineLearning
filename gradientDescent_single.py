@@ -4,7 +4,7 @@ import pandas as pd
 
 # 定义代价函数
 def compute_cost(X, Y, theta):
-    inner = np.power((X * theta.T) - Y, 2)
+    inner = np.power(X.dot(theta.T) - Y, 2)
     return np.sum(inner) / (2 * len(X))
 
 
