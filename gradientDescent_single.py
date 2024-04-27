@@ -49,26 +49,29 @@ iters = 1500
 
 g, cost = gradient_descent(X, Y, theta, alpha, iters)
 
-# # 拟合曲线
-# print(g)
-# print(cost)
-# cost = compute_cost(X, Y, g)
-# print(cost)
-# x = np.linspace(X.min(), X.max(), 100)
-# f = g[0, 0] + (g[0, 1] * x)  # f为假设函数
-# fig, ax = plt.subplots()
-# ax.plot(x, f, 'r', label='Fitted line')
-# ax.scatter(df.population, df.profit,  label='Training Data', marker='x')
-# ax.legend(loc=2)
-# ax.set_xlabel('Population')
-# ax.set_ylabel('Profit')
+# 拟合曲线
+cost = compute_cost(X, Y, g)
+x = np.linspace(X.min(), X.max(), 100)
+f = g[0, 0] + (g[0, 1] * x)  # f为假设函数
+fig, ax = plt.subplots()
+ax.plot(x, f, 'r', label='Fitted line')
+ax.scatter(df.population, df.profit,  label='Training Data', marker='x')
+ax.legend(loc=2)
+ax.set_xlabel('Population')
+ax.set_ylabel('Profit')
+plt.show()
+
+
+# # 代价可视化
+# fig, ax = plt.subplots(figsize=(12, 8))
+# ax.plot(np.arange(iters), cost, 'b')
+# ax.set_xlabel('Iterations')  # 设置x轴表标签
+# ax.set_ylabel('Cost')  # 设置y轴标签
+# ax.set_title('Error vs. Training Epoch')  # 设置表头
 # plt.show()
 
+# 均方误差 MSE(Mean Squared error)
+Z = X * g.T-Y
+Z = Z * Z.T
+print(np.mean(Z))
 
-# 代价可视化
-fig, ax = plt.subplots(figsize=(12, 8))
-ax.plot(np.arange(iters), cost, 'b')
-ax.set_xlabel('Iterations')  # 设置x轴表标签
-ax.set_ylabel('Cost')  # 设置y轴标签
-ax.set_title('Error vs. Training Epoch')  # 设置表头
-plt.show()
