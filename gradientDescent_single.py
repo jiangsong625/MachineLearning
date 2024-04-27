@@ -67,6 +67,7 @@ def show_params(X, Y, g):
     # 打印均方误差 MSE(Mean Squared error)
     inner = np.power((X * g.T) - Y, 2)
     print('MSE:', np.mean(inner))
+    print('RMSE:', np.sqrt(np.mean(inner)))
 
 
 # 主程序
