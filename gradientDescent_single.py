@@ -60,7 +60,6 @@ def visualize_cost(cost, iters):
     plt.show()
 
 
-
 # 显示参数
 def show_params(X, Y, g):
     # 打印参数
@@ -84,11 +83,5 @@ if __name__ == '__main__':
     visualize_results(df, g)
     visualize_cost(cost, iters)
     show_params(X, Y, g)
-
-
-
-
-
-
 
 
