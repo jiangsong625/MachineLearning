@@ -84,5 +84,8 @@ if __name__ == '__main__':
     visualize_results(df, g)
     visualize_cost(cost, iters)
     show_params(X, Y, g)
+    # 预测
+    x = np.matrix([1, 3.5])
+    print(g.dot(x.T))
 
 
