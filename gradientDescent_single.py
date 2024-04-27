@@ -10,17 +10,14 @@ def compute_cost(X, Y, theta):
 
 # 批量梯度下降法
 def gradient_descent(X, Y, theta, alpha, iters ):  # alpha是学习率，iters是迭代次数
-    temp = np.matrix(np.zeros(theta.shape))  # 然后将temp变为矩阵[0.,0.]，保留迭代参数的中间值
-    parameters = int(theta.ravel().shape[1])  # 参数数量，ravel()的作用是将多维数组变为一维数组
     cost = np.zeros(iters)
     for i in range(iters):
-        error = (X * theta.T) - Y  # 预测值与样本的差
+        error = X.dot(theta.T) - Y  # 使用dot进行矩阵乘法，得到预测值与样本的差
 
-        for j in range(parameters):
-            term = np.multiply(error, X[:, j])  # term是偏导数
-            temp[0, j] = theta[0, j] - ((alpha / len(X)) * np.sum(term))  # 更新theta
-
-        theta = temp
+        # 使用向量化方式更新theta，避免循环
+        update = (alpha / len(X)) * error.T.dot(X)
+        # 更新theta
+        theta = theta - update
         cost[i] = compute_cost(X, Y, theta)
 
     return theta, cost
@@ -49,17 +46,17 @@ iters = 1500
 
 g, cost = gradient_descent(X, Y, theta, alpha, iters)
 
-# 拟合曲线
-cost = compute_cost(X, Y, g)
-x = np.linspace(X.min(), X.max(), 100)
-f = g[0, 0] + (g[0, 1] * x)  # f为假设函数
-fig, ax = plt.subplots()
-ax.plot(x, f, 'r', label='Fitted line')
-ax.scatter(df.population, df.profit,  label='Training Data', marker='x')
-ax.legend(loc=2)
-ax.set_xlabel('Population')
-ax.set_ylabel('Profit')
-plt.show()
+# # 拟合曲线
+# cost = compute_cost(X, Y, g)
+# x = np.linspace(X.min(), X.max(), 100)
+# f = g[0, 0] + (g[0, 1] * x)  # f为假设函数
+# fig, ax = plt.subplots()
+# ax.plot(x, f, 'r', label='Fitted line')
+# ax.scatter(df.population, df.profit,  label='Training Data', marker='x')
+# ax.legend(loc=2)
+# ax.set_xlabel('Population')
+# ax.set_ylabel('Profit')
+# plt.show()
 
 
 # # 代价可视化
@@ -70,8 +67,6 @@ plt.show()
 # ax.set_title('Error vs. Training Epoch')  # 设置表头
 # plt.show()
 
-# 均方误差 MSE(Mean Squared error)
-Z = X * g.T-Y
-Z = Z * Z.T
-print(np.mean(Z))
-
+# 打印均方误差 MSE(Mean Squared error)
+inner = np.power((X * g.T) - Y, 2)
+print('MSE:', np.mean(inner))
