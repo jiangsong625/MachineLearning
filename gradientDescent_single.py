@@ -70,6 +70,7 @@ def show_params(X, Y, g):
     print('RMSE:', np.sqrt(np.mean(inner)))
 
 
+
 # 主程序
 if __name__ == '__main__':
     X, Y, df = load_and_preprocess_data('dataFile/ex1data1.txt')
