@@ -67,7 +67,8 @@ def show_params(X, Y, g):
     # 打印均方误差 MSE(Mean Squared error)
     inner = np.power((X * g.T) - Y, 2)
     print('MSE:', np.mean(inner))
-    print('RMSE:', np.sqrt(np.mean(inner)))
+    # 打印代价
+    print('Cost:', compute_cost(X, Y, g))
 
 
 # 主程序
@@ -78,14 +79,11 @@ if __name__ == '__main__':
     # 设置学习率
     alpha = 0.01
     # 设置迭代次数
-    iters = 1500
+    iters = 2000
     # 拟合模型
     g, cost = gradient_descent(X, Y, theta, alpha, iters)
     visualize_results(df, g)
     visualize_cost(cost, iters)
     show_params(X, Y, g)
-    # 预测
-    x = np.matrix([1, 3.5])
-    print(g.dot(x.T))
 
 
