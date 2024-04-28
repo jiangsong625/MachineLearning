@@ -11,17 +11,13 @@ def compute_cost(X, Y, theta):
 
 # 梯度下降法
 def gradient_descent(X, Y, theta, alpha, iters):
-    temp = np.matrix(np.zeros(theta.shape))
-    parameters = int(theta.ravel().shape[1])
     cost = np.zeros(iters)  # 存放每次的代价
     for i in range(iters):
-        error = (X * theta.T - Y)
+        error = X.dot(theta.T) - Y
 
-        for j in range(parameters):
-            term = np.multiply(error, X[:, j])  # 求偏导数
-            temp[0, j] = theta[0, j] - ((alpha / len(X)) * np.sum(term))
-        theta = temp
+        theta -= alpha*(error.T.dot(X))/(len(X))
         cost[i] = compute_cost(X, Y, theta)
+
     return theta, cost
 
 
@@ -42,7 +38,7 @@ def load_and_preprocess_data(filename):
     return X, Y, data, theta
 
 
-#代价可视化
+# 代价可视化
 def visualize_cost(cost, iters):
     fig, ax = plt.subplots()  # 详见https://www.runoob.com/matplotlib/matplotlib-subplots.html
     ax.plot(np.arange(iters), cost, label='cost',color='r')
@@ -67,5 +63,3 @@ if __name__ == '__main__':
     theta, cost = gradient_descent(X, Y, theta, alpha, iters)
     visualize_cost(cost, iters)
     show_params(X, Y, theta)
-
-
