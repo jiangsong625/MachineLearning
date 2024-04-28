@@ -41,7 +41,7 @@ def load_and_preprocess_data(filename):
 # 代价可视化
 def visualize_cost(cost, iters):
     fig, ax = plt.subplots()  # 详见https://www.runoob.com/matplotlib/matplotlib-subplots.html
-    ax.plot(np.arange(iters), cost, label='cost',color='r')
+    ax.plot(np.arange(iters), cost, label='cost', color='r')
     ax.set_xlabel('Iterations')
     ax.set_ylabel('Cost')
     plt.grid(color='b', linestyle='--')
