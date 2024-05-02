@@ -122,7 +122,6 @@ def show_params(X, Y, g):
     print('cost:', compute_cost(X, Y, g))  # Calculating and displaying the cost associated with the given parameters
 
 
-
 if __name__ == '__main__':
     # 设置学习率
     alpha = 0.01

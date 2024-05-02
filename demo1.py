@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
+
 def load_and_preprocess_data(filename):
     """加载数据并进行预处理，添加截距项"""
     df = pd.read_csv(filename, names=['population', 'profit'])
