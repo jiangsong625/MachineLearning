@@ -15,7 +15,7 @@ def load_and_preprocess_data():
 if __name__ == '__main__':
     X, y = load_and_preprocess_data()
     lr_model = LogisticRegression()
-    X_ploy = PolynomialFeatures(degree=1).fit_transform(X)
+    X_ploy = PolynomialFeatures(degree=2).fit_transform(X)
     lr_model.fit(X_ploy, y)
 
     print(f'Coefficients: {lr_model.coef_}, Intercept: {lr_model.intercept_}')
@@ -23,8 +23,7 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(figsize=(12, 8))
     ax.scatter(X[y == 1, 0], X[y == 1, 1], marker='o', label='Accepted')
     ax.scatter(X[y == 0, 0], X[y == 0, 1], marker='x', label='Rejected')
-    print(lr_model.score(X_ploy, y))
-    y = lr_model.predict(X_ploy)
+    ax.plot(X, lr_model.predict_proba(X_ploy)[:, 1], color='blue', label='Decision Boundary')
     ax.plot(X[:, 0], y, color='red', label='Decision Boundary')
     ax.set_xlabel('Test 1 Score')
     ax.set_ylabel('Test 2 Score')
