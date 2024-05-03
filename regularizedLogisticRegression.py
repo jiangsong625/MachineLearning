@@ -3,81 +3,86 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 
-
-
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
 
-def cost_reg(theta, X, y, learning_rate):
-    theta = np.matrix(theta)
-    X = np.matrix(X)
-    y = np.matrix(y)
-    first = np.multiply(-y, np.log(sigmoid(X.dot(theta.T))))
-    second = np.multiply((1 - y), np.log(1 - sigmoid(X.dot(theta.T))))
-    reg = learning_rate / (2 * len(X)) * np.sum(np.power(theta[:, 1:theta.shape[1]], 2))
-    return np.sum(first - second) / len(X) + reg
+def compute_cost_reg(w, b, X, y, learning_rate):
+    m = X.shape[0]
+    cost = (-1 / m) * (np.dot(y.T, np.log(sigmoid(np.dot(X, w.T) + b))) + np.dot((1 - y), np.log(1 - sigmoid(np.dot(X, w.T) + b))))
+    reg = (learning_rate / (2 * m)) * np.sum(w[1:] ** 2)
+    return cost + reg
 
 
-def gradient_reg(theta, X, y, learning_rate):
-    theta = np.matrix(theta)
-    X = np.matrix(X)
-    y = np.matrix(y)
-    m = len(X)
-    params = int(theta.ravel().shape[1])
-    grad = np.zeros(params)
-    error = sigmoid(X * theta.T) - y
-    for i in range(params):
-        term = np.multiply(error, X[:, i])
-        if (i == 0):
-            grad[i] = np.sum(term) / m
-        else:
-            grad[i] = (np.sum(term) / m) + ((learning_rate / m) * theta[0:, i])
+# 梯度
+def compute_gradient(w, b, X, y):
+    m = X.shape[0]
+    dj_dw = (1 / m) * (np.dot(X.T, sigmoid(np.dot(X, w.T)+b) - y))
+    dj_db = (1 / m) * np.sum(sigmoid(np.dot(X, w.T)+b) - y)
+    return dj_dw, dj_db
 
-    return grad
+
+def compute_gradient_reg(w, b, X, y, learning_rate):
+    m = X.shape[0]
+    dj_dw, dj_db = compute_gradient(w, b, X, y)
+    dj_dw += (learning_rate / m) * w
+    return dj_dw, dj_db
+
+
+def gradient_descent_reg(X, y, w_in, b_in, cost_function, gradient_function, alpha, iters, lambda_):
+    J_history = []
+    w_history = []
+    for i in range(iters):
+        dj_dw, dj_db = gradient_function(w_in, b_in, X, y, lambda_)
+        w_in = w_in - alpha * dj_dw
+        b_in = b_in - alpha * dj_db
+        J_history.append(cost_function(w_in, b_in, X, y, lambda_))
+        if i % 100000 == 0:
+            w_history.append(w_in)
+            print(f'Iteration {i:4d}: Cost {J_history[-1]:8.2f}')
+
+    return w_in, b_in, J_history, w_history
+
+
+def load_and_preprocess_data():
+    df = pd.read_csv('dataFile/ex2data2.txt', names=['Test 1', 'Test 2', 'Accepted'])
+    data = df.copy()
+    # 特征映射
+    degree = 6
+    for i in range(1, degree+1):
+        for j in range(i + 1):
+            df['F' + str(i - j) + str(j)] = (df['Test 1'] ** (i - j)) * (df['Test 2'] ** j)
+    df.drop(['Test 1', 'Test 2'], axis=1, inplace=True)
+    X = df.drop('Accepted', axis=1)
+    y = df['Accepted']
+    return data, df, X, y
 
 
 if __name__ == '__main__':
     # 导入数据
-    df = pd.read_csv('dataFile/ex2data2.txt', names=['Test 1', 'Test 2', 'Accepted'])
-    positive = df.loc[df['Accepted'] == 1]
-    negative = df.loc[df['Accepted'] == 0]
-    # 绘图片
-    # fig, ax = plt.subplots(figsize=(12, 8))
-    # ax.scatter(positive['Test 1'], positive['Test 2'], s=50, c='b', marker='o', label='Accepted')
-    # ax.scatter(negative['Test 1'], negative['Test 2'], s=50, c='r', marker='x', label='Rejected')
-    # ax.legend()
-    # ax.set_xlabel('Test 1 Score')
-    # ax.set_ylabel('Test 2 Score')
-    # plt.show()
-    # lr_model = LogisticRegression()
-    # lr_model.fit(df[['Test 1', 'Test 2']], df['Accepted'])
-    # 绘图
-    # fig, ax = plt.subplots(figsize=(12, 8))
-    # ax.scatter(positive['Test 1'], positive['Test 2'], s=50, c='b', marker='o', label='Accepted')
-    # ax.scatter(negative['Test 1'], negative['Test 2'], s=50, c='r', marker='x', label='Rejected')
-    # x_min, x_max = ax.get_xlim()
-    # print(lr_model.score(df[['Test 1', 'Test 2']], df['Accepted']))
+    data, df, X, y = load_and_preprocess_data()
+    initial_w = np.random.rand(X.shape[1]) - 0.5
+    initial_b = 0.5
+    iterations = 300000
+    alpha = 0.1
+    lambda_ = 0.01
+    # print(compute_cost_reg(initial_w, initial_b, X, y, 1))
+    # print(compute_gradient_reg(initial_w, initial_b, X, y, 1))
+    w, b, J_history, w_history = gradient_descent_reg(
+        X.values, y.values, initial_w, initial_b,
+        compute_cost_reg, compute_gradient_reg,
+        alpha, iterations, lambda_)
+    # 预测
+    predictions = sigmoid(np.dot(X, w.T) + b)
+    for i in range(len(predictions)):
+        if predictions[i] >= 0.5:
+            predictions[i] = 1
+        else:
+            predictions[i] = 0
+    # 显示模型准确性，约为0.83
+    print(np.sum((y-predictions) == 0) / len(predictions))
 
-    # degree = 5
-    # x1 = df['Test 1']
-    # x2 = df['Test 2']
-    # df.insert(loc=3, column='Ones', value=1)
-    # for i in range(1, degree):
-    #     for j in range(0, i):
-    #         df['F' + str(i) + str(j)] = np.power(x1, i - j) * np.power(x2, j)
-    # df.drop('Test 1', axis=1, inplace=True)
-    # df.drop('Test 2', axis=1, inplace=True)
-    # print(df.head())
 
-    columns = df.shape[1]
-    X = df.iloc[:, 0:columns - 1]
-    y = df.iloc[:, columns - 1:columns]
-    X = np.array(X.values)
-    y = np.array(y.values)
-    theta = np.zeros(X.shape[1])
-    learning_rate = 1
-    cost = cost_reg(theta, X, y, learning_rate)
-    grad = gradient_reg(theta, X, y, learning_rate)
-    print(cost)
-    print(grad)
+
+
+
