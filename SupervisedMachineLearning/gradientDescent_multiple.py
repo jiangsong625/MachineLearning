@@ -38,7 +38,6 @@ def gradient_descent(X, Y, theta, alpha, iters):
     return theta, cost
 
 
-
 # 提取数据
 def load_and_preprocess_data(filename):
     """
@@ -77,7 +76,6 @@ def load_and_preprocess_data(filename):
     theta = np.matrix(np.zeros(cols - 1))
 
     return X, Y, data, theta
-
 
 
 # 代价可视化

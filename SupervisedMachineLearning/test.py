@@ -1,7 +1,7 @@
 import numpy
 import pandas as pd
 import numpy as np
-import gradientDescent_single as gradient
+from SupervisedMachineLearning import gradientDescent_single as gradient
 import matplotlib.pyplot as plt
 
 

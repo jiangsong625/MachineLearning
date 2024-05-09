@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 
+
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
