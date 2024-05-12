@@ -2,8 +2,7 @@
 import numpy as np
 
 
-a = np.zeros((2, 5))
-print(a)
-b = np.ones((5, 2))
-print(b)
-print(np.dot(a, b))
+X_train = np.array([0., 1, 2, 3, 4, 5], dtype=np.float32).reshape(-1,1)
+print(X_train[1].reshape(1, 1))
+Xt = np.tile(X_train, (1, 1, 100))
+print(Xt)
