@@ -1,8 +1,18 @@
-# import tensorflow.keras
+import scipy.io as sio
 import numpy as np
+import scipy.optimize as opt
+import matplotlib
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
 
 
-X_train = np.array([0., 1, 2, 3, 4, 5], dtype=np.float32).reshape(-1,1)
-print(X_train[1].reshape(1, 1))
-Xt = np.tile(X_train, (1, 1, 100))
-print(Xt)
+tf.random.set_seed(1234)
+model = Sequential([
+    Dense(units=120, activation='Relu'),
+    Dense(units=40,  activation='Relu'),
+    Dense(units=6,   activation='linear')
+])
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.01),
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))
