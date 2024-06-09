@@ -211,7 +211,7 @@ node {
     key: "else_branch"
     value {
       func {
-        name: "global_step_cond_false_7076"
+        name: "global_step_cond_false_180"
       }
     }
   }
@@ -228,7 +228,7 @@ node {
     key: "then_branch"
     value {
       func {
-        name: "global_step_cond_true_7075"
+        name: "global_step_cond_true_179"
       }
     }
   }
@@ -1948,7 +1948,7 @@ node {
     key: "else_branch"
     value {
       func {
-        name: "zero_fraction_total_zero_zero_count_false_7138"
+        name: "zero_fraction_total_zero_zero_count_false_242"
       }
     }
   }
@@ -1965,7 +1965,7 @@ node {
     key: "then_branch"
     value {
       func {
-        name: "zero_fraction_total_zero_zero_count_true_7137"
+        name: "zero_fraction_total_zero_zero_count_true_241"
       }
     }
   }
@@ -9320,7 +9320,7 @@ node {
   attr {
     key: "_gradient_op_type"
     value {
-      s: "CustomGradient-7401"
+      s: "CustomGradient-505"
     }
   }
   attr {
@@ -13978,53 +13978,7 @@ node {
 library {
   function {
     signature {
-      name: "global_step_cond_false_7076"
-      input_arg {
-        name: "placeholder"
-        type: DT_RESOURCE
-      }
-      input_arg {
-        name: "global_step_initializer_zeros_0"
-        type: DT_INT64
-      }
-      output_arg {
-        name: "global_step_initializer_zeros"
-        type: DT_INT64
-      }
-    }
-    ret {
-      key: "global_step_initializer_zeros"
-      value: "global_step_initializer_zeros_0"
-    }
-    attr {
-      key: "_input_shapes"
-      value {
-        list {
-          shape {
-          }
-          shape {
-          }
-        }
-      }
-    }
-    arg_attr {
-      key: 1
-      value {
-        attr {
-          key: "_output_shapes"
-          value {
-            list {
-              shape {
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  function {
-    signature {
-      name: "zero_fraction_total_zero_zero_count_false_7138"
+      name: "zero_fraction_total_zero_zero_count_false_242"
       input_arg {
         name: "zero_fraction_readvariableop_linear_linear_model_x_weights"
         type: DT_RESOURCE
@@ -14210,7 +14164,7 @@ library {
         key: "else_branch"
         value {
           func {
-            name: "zero_fraction_cond_false_7148"
+            name: "zero_fraction_cond_false_252"
           }
         }
       }
@@ -14227,7 +14181,7 @@ library {
         key: "then_branch"
         value {
           func {
-            name: "zero_fraction_cond_true_7147"
+            name: "zero_fraction_cond_true_251"
           }
         }
       }
@@ -14454,7 +14408,228 @@ library {
   }
   function {
     signature {
-      name: "zero_fraction_cond_true_7147"
+      name: "zero_fraction_cond_false_252"
+      input_arg {
+        name: "count_nonzero_notequal_zero_fraction_readvariableop"
+        type: DT_FLOAT
+      }
+      output_arg {
+        name: "count_nonzero_nonzero_count"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "count_nonzero/zeros"
+      op: "Const"
+      attr {
+        key: "_output_shapes"
+        value {
+          list {
+            shape {
+            }
+          }
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_FLOAT
+            tensor_shape {
+            }
+            float_val: 0.0
+          }
+        }
+      }
+    }
+    node_def {
+      name: "count_nonzero/NotEqual"
+      op: "NotEqual"
+      input: "count_nonzero_notequal_zero_fraction_readvariableop"
+      input: "count_nonzero/zeros:output:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_output_shapes"
+        value {
+          list {
+            shape {
+              dim {
+                size: 784
+              }
+              dim {
+                size: 10
+              }
+            }
+          }
+        }
+      }
+      attr {
+        key: "incompatible_shape_error"
+        value {
+          b: true
+        }
+      }
+    }
+    node_def {
+      name: "count_nonzero/Cast"
+      op: "Cast"
+      input: "count_nonzero/NotEqual:z:0"
+      attr {
+        key: "DstT"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "SrcT"
+        value {
+          type: DT_BOOL
+        }
+      }
+      attr {
+        key: "Truncate"
+        value {
+          b: false
+        }
+      }
+      attr {
+        key: "_output_shapes"
+        value {
+          list {
+            shape {
+              dim {
+                size: 784
+              }
+              dim {
+                size: 10
+              }
+            }
+          }
+        }
+      }
+    }
+    node_def {
+      name: "count_nonzero/Const"
+      op: "Const"
+      attr {
+        key: "_output_shapes"
+        value {
+          list {
+            shape {
+              dim {
+                size: 2
+              }
+            }
+          }
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            tensor_shape {
+              dim {
+                size: 2
+              }
+            }
+            tensor_content: "\000\000\000\000\001\000\000\000"
+          }
+        }
+      }
+    }
+    node_def {
+      name: "count_nonzero/nonzero_count"
+      op: "Sum"
+      input: "count_nonzero/Cast:y:0"
+      input: "count_nonzero/Const:output:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_output_shapes"
+        value {
+          list {
+            shape {
+            }
+          }
+        }
+      }
+      attr {
+        key: "keep_dims"
+        value {
+          b: false
+        }
+      }
+    }
+    ret {
+      key: "count_nonzero_nonzero_count"
+      value: "count_nonzero/nonzero_count:output:0"
+    }
+    attr {
+      key: "_input_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 784
+            }
+            dim {
+              size: 10
+            }
+          }
+        }
+      }
+    }
+    arg_attr {
+      value {
+        attr {
+          key: "_output_shapes"
+          value {
+            list {
+              shape {
+                dim {
+                  size: 784
+                }
+                dim {
+                  size: 10
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  function {
+    signature {
+      name: "zero_fraction_cond_true_251"
       input_arg {
         name: "count_nonzero_notequal_zero_fraction_readvariableop"
         type: DT_FLOAT
@@ -14707,18 +14882,22 @@ library {
   }
   function {
     signature {
-      name: "zero_fraction_cond_false_7148"
+      name: "zero_fraction_total_zero_zero_count_true_241"
       input_arg {
-        name: "count_nonzero_notequal_zero_fraction_readvariableop"
-        type: DT_FLOAT
+        name: "placeholder"
+        type: DT_RESOURCE
+      }
+      input_arg {
+        name: "placeholder_1"
+        type: DT_INT64
       }
       output_arg {
-        name: "count_nonzero_nonzero_count"
-        type: DT_INT64
+        name: "const"
+        type: DT_FLOAT
       }
     }
     node_def {
-      name: "count_nonzero/zeros"
+      name: "Const"
       op: "Const"
       attr {
         key: "_output_shapes"
@@ -14747,178 +14926,29 @@ library {
         }
       }
     }
-    node_def {
-      name: "count_nonzero/NotEqual"
-      op: "NotEqual"
-      input: "count_nonzero_notequal_zero_fraction_readvariableop"
-      input: "count_nonzero/zeros:output:0"
-      attr {
-        key: "T"
-        value {
-          type: DT_FLOAT
-        }
-      }
-      attr {
-        key: "_output_shapes"
-        value {
-          list {
-            shape {
-              dim {
-                size: 784
-              }
-              dim {
-                size: 10
-              }
-            }
-          }
-        }
-      }
-      attr {
-        key: "incompatible_shape_error"
-        value {
-          b: true
-        }
-      }
-    }
-    node_def {
-      name: "count_nonzero/Cast"
-      op: "Cast"
-      input: "count_nonzero/NotEqual:z:0"
-      attr {
-        key: "DstT"
-        value {
-          type: DT_INT64
-        }
-      }
-      attr {
-        key: "SrcT"
-        value {
-          type: DT_BOOL
-        }
-      }
-      attr {
-        key: "Truncate"
-        value {
-          b: false
-        }
-      }
-      attr {
-        key: "_output_shapes"
-        value {
-          list {
-            shape {
-              dim {
-                size: 784
-              }
-              dim {
-                size: 10
-              }
-            }
-          }
-        }
-      }
-    }
-    node_def {
-      name: "count_nonzero/Const"
-      op: "Const"
-      attr {
-        key: "_output_shapes"
-        value {
-          list {
-            shape {
-              dim {
-                size: 2
-              }
-            }
-          }
-        }
-      }
-      attr {
-        key: "dtype"
-        value {
-          type: DT_INT32
-        }
-      }
-      attr {
-        key: "value"
-        value {
-          tensor {
-            dtype: DT_INT32
-            tensor_shape {
-              dim {
-                size: 2
-              }
-            }
-            tensor_content: "\000\000\000\000\001\000\000\000"
-          }
-        }
-      }
-    }
-    node_def {
-      name: "count_nonzero/nonzero_count"
-      op: "Sum"
-      input: "count_nonzero/Cast:y:0"
-      input: "count_nonzero/Const:output:0"
-      attr {
-        key: "T"
-        value {
-          type: DT_INT64
-        }
-      }
-      attr {
-        key: "Tidx"
-        value {
-          type: DT_INT32
-        }
-      }
-      attr {
-        key: "_output_shapes"
-        value {
-          list {
-            shape {
-            }
-          }
-        }
-      }
-      attr {
-        key: "keep_dims"
-        value {
-          b: false
-        }
-      }
-    }
     ret {
-      key: "count_nonzero_nonzero_count"
-      value: "count_nonzero/nonzero_count:output:0"
+      key: "const"
+      value: "Const:output:0"
     }
     attr {
       key: "_input_shapes"
       value {
         list {
           shape {
-            dim {
-              size: 784
-            }
-            dim {
-              size: 10
-            }
+          }
+          shape {
           }
         }
       }
     }
     arg_attr {
+      key: 1
       value {
         attr {
           key: "_output_shapes"
           value {
             list {
               shape {
-                dim {
-                  size: 784
-                }
-                dim {
-                  size: 10
-                }
               }
             }
           }
@@ -14928,7 +14958,53 @@ library {
   }
   function {
     signature {
-      name: "global_step_cond_true_7075"
+      name: "global_step_cond_false_180"
+      input_arg {
+        name: "placeholder"
+        type: DT_RESOURCE
+      }
+      input_arg {
+        name: "global_step_initializer_zeros_0"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "global_step_initializer_zeros"
+        type: DT_INT64
+      }
+    }
+    ret {
+      key: "global_step_initializer_zeros"
+      value: "global_step_initializer_zeros_0"
+    }
+    attr {
+      key: "_input_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+    arg_attr {
+      key: 1
+      value {
+        attr {
+          key: "_output_shapes"
+          value {
+            list {
+              shape {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  function {
+    signature {
+      name: "global_step_cond_true_179"
       input_arg {
         name: "read_readvariableop_global_step"
         type: DT_RESOURCE
@@ -14991,82 +15067,6 @@ library {
     ret {
       key: "identity"
       value: "Identity:output:0"
-    }
-    attr {
-      key: "_input_shapes"
-      value {
-        list {
-          shape {
-          }
-          shape {
-          }
-        }
-      }
-    }
-    arg_attr {
-      key: 1
-      value {
-        attr {
-          key: "_output_shapes"
-          value {
-            list {
-              shape {
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  function {
-    signature {
-      name: "zero_fraction_total_zero_zero_count_true_7137"
-      input_arg {
-        name: "placeholder"
-        type: DT_RESOURCE
-      }
-      input_arg {
-        name: "placeholder_1"
-        type: DT_INT64
-      }
-      output_arg {
-        name: "const"
-        type: DT_FLOAT
-      }
-    }
-    node_def {
-      name: "Const"
-      op: "Const"
-      attr {
-        key: "_output_shapes"
-        value {
-          list {
-            shape {
-            }
-          }
-        }
-      }
-      attr {
-        key: "dtype"
-        value {
-          type: DT_FLOAT
-        }
-      }
-      attr {
-        key: "value"
-        value {
-          tensor {
-            dtype: DT_FLOAT
-            tensor_shape {
-            }
-            float_val: 0.0
-          }
-        }
-      }
-    }
-    ret {
-      key: "const"
-      value: "Const:output:0"
     }
     attr {
       key: "_input_shapes"
